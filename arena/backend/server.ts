@@ -1,9 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
-
+import userRoute from "./routes/userRoute";
 const app = express();
 
 app.use(express.json()); // allows parsing JSON bodies
 
+app.use("/user", userRoute)
 // GET route
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
   try {
