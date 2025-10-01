@@ -3,15 +3,17 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Login from './Login';
 import Dashboard from './Dashboard';
+import ImageFeed from './DashboardComponents/ImageFeed';
 
 function App() {
   return (
     <div>
-      <p>hello world</p>
-      <Routes>
+      <h1>Arena</h1>
+      {/* <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/dashboard' element={<Dashboard />} />
-      </Routes>
+      </Routes> */}
+      <ImageFeed />
     </div>
   );
 }
