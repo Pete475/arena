@@ -18,8 +18,6 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/dashboard' element={<Dashboard />} />
-        {/* Catch all safety route */}
-        <Route path='*' element={<h2> 404 PathNot Found</h2>} />
       </Routes>
     </Router>
   );
