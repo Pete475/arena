@@ -1,6 +1,12 @@
 import express, { Request, Response, NextFunction } from "express";
+import cors from 'cors';
 import userRoute from "./routes/userRoute";
 const app = express();
+
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true // Essential for sending cookies/sessions with authentication requests.
+}));
 
 app.use(express.json()); // allows parsing JSON bodies
 
