@@ -90,5 +90,4 @@ export const loginUser = async (
   }
 };
 
-// Your getUsers function is now likely obsolete unless you want to retrieve a list of all users.
-// If you keep it, update the query to SELECT * FROM "USER".
+
