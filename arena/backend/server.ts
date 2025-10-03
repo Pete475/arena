@@ -1,49 +1,52 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import userRoute from "./routes/userRoute";
+import userRoute from './routes/userRoute';
 const app = express();
 
-app.use(cors({
-    origin: 'http://localhost:5173', 
-    credentials: true // Essential for sending cookies/sessions with authentication requests.
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true, // Essential for sending cookies/sessions with authentication requests.
+  })
+);
 
 app.use(express.json()); // allows parsing JSON bodies
 
-app.use("/user", userRoute)
+app.use('/user', userRoute);
 // GET route
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
+app.get('/', (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json({ message: "GET request successful" });
+    res.json({ message: 'GET request successful' });
   } catch (err) {
     next(err);
   }
 });
 
 // POST route
-app.post("/", (req: Request, res: Response, next: NextFunction) => {
+app.post('/', (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
-    res.json({ message: "POST request successful", data });
+    res.json({ message: 'POST request successful', data });
   } catch (err) {
     next(err);
   }
 });
 
 // DELETE route
-app.delete("/", (req: Request, res: Response, next: NextFunction) => {
+app.delete('/', (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json({ message: "DELETE request successful" });
+    res.json({ message: 'DELETE request successful' });
   } catch (err) {
     next(err);
   }
 });
 
 // Global error handler
-app.use((err: Error, req: Request, res: Response) => {
-  console.error("Global error handler caught:", err);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error('Global error handler caught:', err);
   res.status(500).json({
-    error: "Internal Server Error",
+    error: 'Internal Server Error',
     message: err.message,
   });
 });
