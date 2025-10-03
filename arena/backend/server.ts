@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import userRoute from './routes/userRoute';
+import imagesRoute from './routes/imagesRoute';
+import contestRoute from './routes/contestRoute';
 const app = express();
 
 app.use(
@@ -13,6 +15,9 @@ app.use(
 app.use(express.json()); // allows parsing JSON bodies
 
 app.use('/user', userRoute);
+app.use('/images', imagesRoute);
+app.use('/contest', contestRoute);
+
 // GET route
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   try {
