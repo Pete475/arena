@@ -35,7 +35,7 @@ export const addContest = async (
       'INSERT INTO "contest" ("contestName", "ownerID", "created_at") VALUES ($1, $2, $3) RETURNING *',
       [req.body.contestName, req.body.ownerID, new Date()]
     );
-    res.locals.contest = result.rows[0];
+    res.locals.contest = newContest.rows[0];
     return next();
   } catch (err) {
     return next({
