@@ -11,13 +11,16 @@
     "start": "tsx backend/server.ts"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "express": "^5.1.0",
+    "pg": "^8.16.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@types/express": "^5.0.3",
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
