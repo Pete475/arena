@@ -12,14 +12,23 @@
     "dev:server": "tsx watch backend/server.ts"
   },
   "dependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/pg": "^8.15.5",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "cors": "^2.8.5",
+    "bcrypt": "^6.0.0",
     "express": "^5.1.0",
+    "pg": "^8.16.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@types/express": "^5.0.3",
     "@types/express": "^5.0.3",
     "@types/node": "^24.6.2",
     "@types/react": "^19.1.13",

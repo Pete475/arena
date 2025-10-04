@@ -11,14 +11,27 @@ const imageCardStyles = {
   },
 };
 
-function ImageCard() {
-  //   const [imageCardsList, setImageCardsList] = useState([]);
+const imageStyle = {
+  container: {
+    width: '100%',
+    height: 'auto',
+    // width: '100%',
+    // height: '100%',
+    // object-fit: cover,
+    // background-size: cover,
+  },
+};
 
-  //   setImageCardsList([...imageCardsList, props.file]);
-
+function ImageCard(props: { file: string | undefined }) {
   return (
     <div>
-      <div style={imageCardStyles.container}>ImageCard</div>
+      <div style={imageCardStyles.container}>
+        <img
+          src={props.file}
+          alt='Uploaded image'
+          style={imageStyle.container}
+        />
+      </div>
       <Vote />
     </div>
   );

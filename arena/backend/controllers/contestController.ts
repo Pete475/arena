@@ -54,7 +54,7 @@ export const getAllContests = async (
   next: NextFunction
 ) => {
   try {
-    const result = await db.query('SELECT * FROM "CONTEST"');
+    const result = await db.query('SELECT * FROM contest');
     res.locals.contest = result.rows;
     return next();
   } catch (err) {
