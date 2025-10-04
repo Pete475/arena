@@ -1,22 +1,23 @@
 import express, { Request, Response, NextFunction } from 'express';
-import cors from 'cors';
 import userRoute from './routes/userRoute';
-import imagesRoute from './routes/imagesRoute';
+import imagesRoutes from './routes/imagesRoute';
 import contestRoute from './routes/contestRoute';
+import cors from 'cors';
 const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
-    credentials: true, // Essential for sending cookies/sessions with authentication requests.
+    origin: 'http://localhost:5174',
+    credentials: true,
   })
 );
 
 app.use(express.json()); // allows parsing JSON bodies
 
 app.use('/user', userRoute);
-app.use('/images', imagesRoute);
+app.use('/images', imagesRoutes);
 app.use('/contest', contestRoute);
+app.use('/api/contests', contestRoute);
 
 // GET route
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
@@ -47,12 +48,11 @@ app.delete('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Global error handler
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response) => {
   console.error('Global error handler caught:', err);
   res.status(500).json({
     error: 'Internal Server Error',
-    message: err.message,
+    message: err,
   });
 });
 

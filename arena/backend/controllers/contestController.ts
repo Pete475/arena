@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import db from '../models/userModel';
 
-export const getContest = async (
+export const getContestById = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -11,7 +11,7 @@ export const getContest = async (
     const contestQuery = 'SELECT * FROM "contest" WHERE "contestName" = ($1)';
     const contest = await db.query(contestQuery, [contestName]);
 
-    res.locals.contest = contest.rows;
+    res.locals.contest = contest.rows[0];
     return next();
   } catch (err) {
     return next({
@@ -35,7 +35,7 @@ export const addContest = async (
       'INSERT INTO "contest" ("contestName", "ownerID", "created_at") VALUES ($1, $2, $3) RETURNING *',
       [req.body.contestName, req.body.ownerID, new Date()]
     );
-    res.locals.contest = newContest.rows[0];
+    res.locals.contest = result.rows[0];
     return next();
   } catch (err) {
     return next({
@@ -45,5 +45,19 @@ export const addContest = async (
         e: 'An error occurred when adding a new image',
       },
     });
+  }
+};
+
+export const getAllContests = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await db.query('SELECT * FROM "CONTEST"');
+    res.locals.contest = result.rows;
+    return next();
+  } catch (err) {
+    return next(err);
   }
 };
