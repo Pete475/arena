@@ -1,9 +1,20 @@
 import { Request, Response, Router } from 'express';
-import { getContest, addContest } from '../controllers/contestController';
+import {
+  getContestById,
+  addContest,
+  getAllContests,
+} from '../controllers/contestController';
 
 const router = Router();
 
-router.get('/', getContest, (_req: Request, res: Response) => {
+router.options('/', (_req, res) => res.sendStatus(200));
+
+router.get('/', getAllContests, (_req: Request, res: Response) => {
+  console.log("router get all contests:", res.locals.contest); 
+  res.json(res.locals.contest);
+});
+
+router.get('/:id', getContestById, (_req: Request, res: Response) => {
   res.json(res.locals.contest);
 });
 

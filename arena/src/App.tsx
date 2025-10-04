@@ -9,7 +9,6 @@ import './App.css';
 import Login from './Login';
 import Signup from './Signup';
 import Dashboard from './Dashboard';
-import ImageFeed from './DashboardComponents/ImageFeed';
 
 function App() {
   return (

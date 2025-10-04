@@ -1,51 +1,55 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+type Contest = {
+  contestid: number;
+  contestname: string;
+};
 
 function ContestList() {
+  const [contestList, setContestList] = useState<Contest[]>([]);
+  const [inputValue, setInputValue] = useState('');
 
-const initialContests = [
-    { id: 1, name: 'waterfalls' },
-    { id: 2, name: 'rainbows' },
-    { id: 3, name: 'puppies' },
-]
+  useEffect(() => {
+    fetch('http://localhost:3334/api/contests')
+      .then((res) => res.json())
+      .then((data) => setContestList(data))
+      .catch((err) => console.error('Failed to load contests', err));
+  }, []);
 
-  const [contestList, setContestList] = useState(initialContests);
-  const [inputValue, setInputValue] = useState(''); 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!inputValue.trim()) return;
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
-    if (!inputValue.trim()) return; 
-    const newContest = { id: contestList.length + 1, name: inputValue}; 
-    setContestList(prevList => [...prevList, newContest]); 
-    setInputValue(''); 
-  }
-
-  const handleChange = (e) => {
-    setInputValue(e.target.value) 
-  }
-
+    try {
+      const res = await fetch('http://localhost:3334/api/contests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contestName: inputValue }),
+      });
+      const newContest = await res.json();
+      setContestList((prev) => [...prev, newContest]);
+      setInputValue('');
+    } catch (err) {
+      console.error('Error adding contest:', err);
+    }
+  };
 
   return (
     <div>
-    <ul>
-        {contestList.map(contest => (
-            <li key={contest.id}>{contest.name}</li>
+      <ul>
+        {contestList.map((c) => (
+          <li key={c.contestid}>{c.contestname}</li>
         ))}
-    </ul>
+      </ul>
 
-    <form onSubmit={handleSubmit}>
-        <label>
-            Start Your Own Contest: 
-            <input
-              type="text"
-              value={inputValue}
-              onChange={handleChange}
-            />
-        </label>
-<button type="submit">Add New Contest</button>
-    </form>
-     
-      
+      <form onSubmit={handleSubmit}>
+        <input
+          type='text'
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button type='submit'>Add Contest</button>
+      </form>
     </div>
   );
 }
