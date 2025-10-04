@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 type Contest = {
   contestid: number;
-  contestname: string;
+  contestName: string;
 };
 
-function ContestList() {
+type ContestListProps = {
+  onContestClick: (contestid: number) => void;
+};
+
+function ContestList({ onContestClick }: ContestListProps) {
   const [contestList, setContestList] = useState<Contest[]>([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -36,9 +40,16 @@ function ContestList() {
 
   return (
     <div>
+      <h2>Contest List</h2>
       <ul>
         {contestList.map((c) => (
-          <li key={c.contestid}>{c.contestname}</li>
+          <li
+            key={c.contestid}
+            onClick={() => onContestClick(c.contestid)}
+            style={{ cursor: 'pointer' }}
+          >
+            {c.contestName}
+          </li>
         ))}
       </ul>
 

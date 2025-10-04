@@ -5,7 +5,7 @@ import {
   Routes,
   Navigate,
 } from 'react-router-dom';
-import './App.css';
+// import './App.css';
 import Login from './Login';
 import Signup from './Signup';
 import Dashboard from './Dashboard';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Signup.css'
+import './Signup.css';
 
 type ApiResponse = { id?: number; username?: string; message?: string };
 
@@ -12,12 +12,12 @@ function Signup() {
     e.preventDefault();
     setMessage(null);
 
-        try {
-            const res = await fetch("http://localhost:3334/api/auth/signup", {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" }, 
-                body: JSON.stringify({ username, password }),
-            }); 
+    try {
+      const res = await fetch('http://localhost:3334/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
 
       const data: ApiResponse = await res.json();
       if (!res.ok) {
@@ -38,7 +38,7 @@ function Signup() {
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Username
+          Username: <br />
           <input
             type='text'
             value={username}
@@ -48,7 +48,7 @@ function Signup() {
         </label>
         <br />
         <label>
-          Password
+          Password: <br />
           <input
             type='text'
             value={password}
