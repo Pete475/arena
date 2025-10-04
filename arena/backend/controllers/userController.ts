@@ -28,20 +28,21 @@ export const createUser = async (
 
     // 2. Check if user (email) already exists (optional but recommended)
     const existingUser = await db.query(
-      'SELECT userID FROM "USER" WHERE user = $1',
+      'SELECT user FROM user WHERE user = $1',
       [user]
     );
     if (existingUser.rows.length > 0) {
       return res
         .status(409)
-        .json({ error: 'User with this email already exists.' });
+        .json({ error: 'User with this username already exists.' });
     }
 
     // 3. Insert new user into the "USER" table
     const query =
-      'INSERT INTO "USER" (user, password) VALUES ($1, $2) RETURNING userID, user'; // Don't return the hashed password
+      'INSERT INTO "user" ("user", password, created_at) VALUES ($1, $2, $3) RETURNING user'; // Don't return the hashed password
 
-    const newUser = await db.query(query, [user, hashedPassword]);
+    console.log('query', query);
+    const newUser = await db.query(query, [user, hashedPassword, new Date()]);
 
     // 201 Created status code is standard for successful POST
     res.status(201).json({
@@ -64,7 +65,7 @@ export const loginUser = async (
     const { user, password } = req.body;
 
     // 1. Find the user by email
-    const result = await db.query('SELECT * FROM "USER" WHERE user = $1', [
+    const result = await db.query('SELECT * FROM "user" WHERE "user" = $1', [
       user,
     ]);
     const foundUser = result.rows[0];
@@ -75,7 +76,7 @@ export const loginUser = async (
 
     // 2. Compare the provided password with the stored hash
     const passwordMatch = await bcrypt.compare(password, foundUser.password);
-
+    
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Invalid credentials.' });
     }
@@ -89,6 +90,3 @@ export const loginUser = async (
     next(err);
   }
 };
-
-// Your getUsers function is now likely obsolete unless you want to retrieve a list of all users.
-// If you keep it, update the query to SELECT * FROM "USER".

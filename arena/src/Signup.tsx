@@ -12,12 +12,12 @@ function Signup() {
     e.preventDefault();
     setMessage(null);
 
-    try {
-      const res = await fetch('http://localhost:3000/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
+        try {
+            const res = await fetch("http://localhost:3334/api/auth/signup", {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" }, 
+                body: JSON.stringify({ username, password }),
+            }); 
 
       const data: ApiResponse = await res.json();
       if (!res.ok) {
