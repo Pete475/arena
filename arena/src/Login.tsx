@@ -1,3 +1,5 @@
+// In: Login.tsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,24 +13,27 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:3000/api/login', {
+      // 🚨 PATH IS CORRECT: POST to http://localhost:3334/user/login
+      const res = await fetch('http://localhost:3334/user/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ username, password }),
+        // Make sure your backend uses the same key names (user and password)
+        body: JSON.stringify({ user: username, password }), // Changed to 'user' to match controller
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        setMessage('login success!');
+        setMessage('Login success!');
         navigate('/dashboard');
       } else {
-        setMessage(data.error || 'login failed');
+        // Now correctly handles errors returned as JSON from the backend
+        setMessage(data.error || 'Login failed');
       }
     } catch (err) {
-      console.log(err);
-      setMessage('Network catch all error');
+      console.error(err); // Changed console.log to console.error for better visibility
+      setMessage('Network catch all error or client-side JSON parsing error.');
     }
   };
 
@@ -46,7 +51,7 @@ const Login: React.FC = () => {
         <br />
         <label>Password</label>
         <input
-          type='text'
+          type='password' // 💡 Recommendation: Use type='password' for security
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
