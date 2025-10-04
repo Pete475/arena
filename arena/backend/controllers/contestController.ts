@@ -8,7 +8,7 @@ export const getContestById = async (
 ) => {
   const contestID = req.params.id;
   try {
-    const contestQuery = 'SELECT * FROM "CONTEST" WHERE contestID = $1';
+    const contestQuery = 'SELECT * FROM contest WHERE contestID = $1';
     const contest = await db.query(contestQuery, [contestID]);
 
     res.locals.contest = contest.rows[0];
@@ -32,7 +32,7 @@ export const addContest = async (
   try {
     const { contestName } = req.body;
     const result = await db.query(
-      'INSERT INTO "CONTEST" (contestName) VALUES ($1) RETURNING *',
+      'INSERT INTO contest (contestName) VALUES ($1) RETURNING *',
       [contestName]
     );
     res.locals.contest = result.rows[0];
@@ -54,7 +54,7 @@ export const getAllContests = async (
   next: NextFunction
 ) => {
   try {
-    const result = await db.query('SELECT * FROM "CONTEST"');
+    const result = await db.query('SELECT * FROM contest');
     res.locals.contest = result.rows;
     return next();
   } catch (err) {

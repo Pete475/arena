@@ -10,11 +10,9 @@ console.log('PG_URI', PG_URI);
 
 const pool = new Pool({
   connectionString: PG_URI,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
-
-pool
-  .query('SELECT NOW()')
-  .then((res) => console.log('DB connected:', res.rows[0].now))
-  .catch((err) => console.error('DB connection error:', err));
 
 export default pool;
