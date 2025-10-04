@@ -7,7 +7,7 @@ const router = Router();
 
 // 🚨 NEW ROUTE: Handles POST /user/login for authentication.
 // It uses loginUser as middleware.
-router.get('/login', loginUser, (req: Request, res: Response) => {
+router.post('/login', loginUser, (req: Request, res: Response) => {
   // Assuming loginUser successfully added 'user' data to res.locals
   // and did NOT send a response itself.
   const { user, message } = res.locals;
