@@ -6,12 +6,12 @@ export const getImages = async (
   res: Response,
   next: NextFunction
 ) => {
-  const contestID = req.query.contestID;
+  const contestID = req.body.contestID;
   try {
     const imageQuery = 'SELECT * FROM "images" WHERE "contestID" = ($1)';
     const imagesInContest = await db.query(imageQuery, [contestID]);
 
-    res.locals.images = imagesInContest;
+    res.locals.images = imagesInContest.rows[0];
     return next();
   } catch (err) {
     return next({

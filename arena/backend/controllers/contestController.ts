@@ -6,7 +6,7 @@ export const getContest = async (
   res: Response,
   next: NextFunction
 ) => {
-  const contestName = req.query.contestName;
+  const contestName = req.body.contestName;
   try {
     const contestQuery = 'SELECT * FROM "contest" WHERE "contestName" = ($1)';
     const contest = await db.query(contestQuery, [contestName]);
